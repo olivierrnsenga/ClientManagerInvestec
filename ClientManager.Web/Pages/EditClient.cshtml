@@ -1,0 +1,45 @@
+﻿@page "{id:int}"
+@model EditClientModel
+
+@{
+    ViewData["Title"] = "Edit Client";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post">
+    
+    <input type="hidden" asp-for="Client.Id" />
+
+    <div class="form-group">
+        <label asp-for="Client.FirstName">First Name</label>
+        <input asp-for="Client.FirstName" class="form-control"/>
+        <span asp-validation-for="Client.FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Client.LastName">Last Name</label>
+        <input asp-for="Client.LastName" class="form-control"/>
+        <span asp-validation-for="Client.LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Client.MobileNumber">Mobile Number</label>
+        <input asp-for="Client.MobileNumber" class="form-control"/>
+        <span asp-validation-for="Client.MobileNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Client.IdNumber">ID Number</label>
+        <input asp-for="Client.IdNumber" class="form-control"/>
+        <span asp-validation-for="Client.IdNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Client.PhysicalAddress">Physical Address</label>
+        <input asp-for="Client.PhysicalAddress" class="form-control"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="/ClientsList" class="btn btn-secondary">Cancel</a>
+</form>

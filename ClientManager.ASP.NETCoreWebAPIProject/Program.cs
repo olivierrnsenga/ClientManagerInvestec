@@ -2,12 +2,16 @@ using ClientManager.Core.DataInterface.DeskBooker.Core.DataInterface;
 using ClientManager.Core.Processor;
 using ClientManager.DataAccess;
 using ClientManager.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<ClientContext>();
+// Register ClientContext with its options
+builder.Services.AddDbContext<ClientContext>(options =>
+    options.UseInMemoryDatabase("ClientDatabase")); // Specify a database name
+
 builder.Services.AddScoped<IClientRequestProcessor, ClientRequestProcessor>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 

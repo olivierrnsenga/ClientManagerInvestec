@@ -23,7 +23,7 @@ public class ClientsController : ControllerBase
 
         var result = _clientRequestProcessor.CreateClient(client);
         if (result.IsSuccess)
-            return CreatedAtAction(nameof(GetClient), new { clientId = result.Id }, result);
+            return Ok(result);
         return BadRequest(result);
     }
 
@@ -51,7 +51,7 @@ public class ClientsController : ControllerBase
 
         var result = _clientRequestProcessor.UpdateClient(client);
         if (result.IsSuccess)
-            return NoContent();
+            return Ok(result);
         return BadRequest(result);
     }
 
@@ -64,7 +64,7 @@ public class ClientsController : ControllerBase
 
         var result = _clientRequestProcessor.DeleteClient(clientId);
         if (result.IsSuccess)
-            return NoContent();
+            return Ok(result);
         return NotFound(result);
     }
 

@@ -1,0 +1,44 @@
+﻿@page
+@model SearchClientsModel
+
+@{
+    ViewData["Title"] = "Search Clients";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="get">
+    <div class="form-group">
+        <label>Search Term</label>
+        <input type="text" name="searchTerm" class="form-control"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (Model.Clients != null && Model.Clients.Any())
+{
+    <h2>Search Results</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Mobile Number</th>
+            <th>ID Number</th>
+            <th>Physical Address</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var client in Model.Clients)
+        {
+            <tr>
+                <td>@client.FirstName</td>
+                <td>@client.LastName</td>
+                <td>@client.MobileNumber</td>
+                <td>@client.IdNumber</td>
+                <td>@client.PhysicalAddress</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

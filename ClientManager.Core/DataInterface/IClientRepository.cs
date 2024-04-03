@@ -16,6 +16,9 @@ namespace ClientManager.Core.DataInterface
             void Update(ClientRequest client);
 
             void Delete(int clientId);
+            public IEnumerable<Client> Search(string searchTerm);
+
+
         }
     }
 }

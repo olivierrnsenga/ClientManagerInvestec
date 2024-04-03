@@ -240,5 +240,52 @@ namespace DeskBooker.DataAccess.Repositories
                 Assert.IsTrue(isValidClientAdded, "A valid client was not added successfully.");
             }
         }
+
+        [TestMethod]
+        public void ShouldSearchClientByFirstNameOrIdNumberOrPhoneNumber()
+        {
+            var options = CreateNewContextOptions();
+
+            var client1 = CreateNewClient("John", "Doe");
+            var client2 = CreateNewClient("Jane", "Doe");
+            var client3 = CreateNewClient("Alice", "Smith");
+            client3.IdNumber = "9002021234567";
+            var client4 = CreateNewClient("Bob", "Johnson");
+            client4.MobileNumber = "0987654321";
+
+            using (var context = new ClientContext(options))
+            {
+                var repository = new ClientRepository(context);
+                repository.Add(client1);
+                repository.Add(client2);
+                repository.Add(client3);
+                repository.Add(client4);
+                context.SaveChanges();
+            }
+
+            using (var context = new ClientContext(options))
+            {
+                var repository = new ClientRepository(context);
+
+                // Search by FirstName
+                var searchResultFirstName = repository.Search("John");
+                Assert.AreEqual(1, searchResultFirstName.Count());
+                Assert.AreEqual("John", searchResultFirstName.Single().FirstName);
+
+                // Search by ID Number
+                var searchResultIdNumber = repository.Search("9002021234567");
+                Assert.AreEqual(1, searchResultIdNumber.Count());
+                Assert.AreEqual("Alice", searchResultIdNumber.Single().FirstName);
+
+                // Search by Phone Number
+                var searchResultPhoneNumber = repository.Search("0987654321");
+                Assert.AreEqual(1, searchResultPhoneNumber.Count());
+                Assert.AreEqual("Bob", searchResultPhoneNumber.Single().FirstName);
+
+                // Search by Non-existent Value
+                var searchResultNonExistent = repository.Search("NonExistent");
+                Assert.AreEqual(0, searchResultNonExistent.Count());
+            }
+        }
     }
 }

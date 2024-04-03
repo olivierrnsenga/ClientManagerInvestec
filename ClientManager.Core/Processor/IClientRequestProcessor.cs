@@ -14,5 +14,7 @@ namespace ClientManager.Core.Processor
         ClientResponse DeleteClient(int clientId);
 
         IEnumerable<Client> GetAllClients();
+
+        IEnumerable<Client> SearchClients(string searchTerm);
     }
 }

@@ -1,8 +1,8 @@
-﻿using ClientManager.Core.DataInterface.DeskBooker.Core.DataInterface;
-using ClientManager.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ClientManager.Core.DataInterface.DeskBooker.Core.DataInterface;
+using ClientManager.Core.Domain;
 
 namespace ClientManager.DataAccess.Repositories
 {
@@ -64,5 +64,17 @@ namespace ClientManager.DataAccess.Repositories
                 throw new ArgumentException("Client not found", nameof(clientId));
             }
         }
+
+        public IEnumerable<Client> Search(string searchTerm)
+        {
+            searchTerm = searchTerm.Trim().ToLower(); 
+
+            return _context.Clients
+                .Where(c => c.FirstName.ToLower().Contains(searchTerm)
+                            || c.IdNumber.Trim() == searchTerm
+                            || c.MobileNumber.Trim() == searchTerm)
+                .ToList();
+        }
+
     }
 }

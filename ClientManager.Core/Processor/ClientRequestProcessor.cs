@@ -20,7 +20,7 @@ namespace ClientManager.Core.Processor
             if (client == null)
                 throw new ArgumentNullException(nameof(client));
 
-            var result = new ClientResponse { };
+            var result = new ClientResponse();
             try
             {
                 _clientRepository.Add(client);
@@ -32,6 +32,7 @@ namespace ClientManager.Core.Processor
                 result.IsSuccess = false;
                 result.Message = $"An error occurred: {ex.Message}";
             }
+
             return result;
         }
 
@@ -57,6 +58,7 @@ namespace ClientManager.Core.Processor
                 result.IsSuccess = false;
                 result.Message = $"An error occurred: {ex.Message}";
             }
+
             return result;
         }
 
@@ -65,7 +67,7 @@ namespace ClientManager.Core.Processor
             if (client == null)
                 throw new ArgumentNullException(nameof(client));
 
-            var result = new ClientResponse { };
+            var result = new ClientResponse();
             try
             {
                 _clientRepository.Update(client);
@@ -77,6 +79,7 @@ namespace ClientManager.Core.Processor
                 result.IsSuccess = false;
                 result.Message = $"An error occurred: {ex.Message}";
             }
+
             return result;
         }
 
@@ -94,21 +97,19 @@ namespace ClientManager.Core.Processor
                 result.IsSuccess = false;
                 result.Message = $"An error occurred: {ex.Message}";
             }
+
             return result;
         }
 
         public IEnumerable<Client> GetAllClients()
         {
-            IEnumerable<Client> allClients = Enumerable.Empty<Client>();
+            var allClients = Enumerable.Empty<Client>();
 
             try
             {
                 allClients = _clientRepository.GetAll();
 
-                if (allClients == null)
-                {
-                    allClients = Enumerable.Empty<Client>();
-                }
+                if (allClients == null) allClients = Enumerable.Empty<Client>();
             }
             catch (Exception)
             {
@@ -116,6 +117,11 @@ namespace ClientManager.Core.Processor
             }
 
             return allClients;
+        }
+
+        public IEnumerable<Client> SearchClients(string searchTerm)
+        {
+            return _clientRepository.Search(searchTerm);
         }
     }
 }

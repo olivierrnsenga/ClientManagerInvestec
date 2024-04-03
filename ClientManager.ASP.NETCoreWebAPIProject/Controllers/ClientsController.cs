@@ -76,4 +76,16 @@ public class ClientsController : ControllerBase
             return Ok(clients);
         return NotFound();
     }
+
+    [HttpGet("search")]
+    public ActionResult<IEnumerable<Client>> SearchClients(string searchTerm)
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+            return BadRequest("Search term cannot be empty.");
+
+        var clients = _clientRequestProcessor.SearchClients(searchTerm);
+        if (clients != null)
+            return Ok(clients);
+        return NotFound();
+    }
 }

@@ -1,15 +1,21 @@
+using ClientManager.Core.DataInterface.DeskBooker.Core.DataInterface;
+using ClientManager.Core.Processor;
+using ClientManager.DataAccess;
+using ClientManager.DataAccess.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddDbContext<ClientContext>();
+builder.Services.AddScoped<IClientRequestProcessor, ClientRequestProcessor>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
